@@ -33,3 +33,8 @@ Here we see the intensity channel and height map for the image. This was a neces
 
 ![labeled bev map](img\labeled_pcl.png)
 Here I have picked out 10 vehicles. Some interesting features to note are cars 1 and 4. They seem to be cut off a little bit. Number 1 is most likely cut off because it is in the blind spot of the vehicle capturing data. And 4 is cut off because vehicle 1 cuts it off. Vehicle 3 is clearly a pickup truck of some sort. Then cars 2, 5-8, and 9 are a bit hard to read as they are farther away from the vehicle. The other cool vehicle I noticed was vehicle 10. It seems to be hauling a trailer with it. I think this because the second part of the car doesn't really look like a car, and it's more raised in the rear, leading me to believe it is a trailer atached to a pickup truck.
+
+Some vehicle parts being rendered are the side mirrors in vehicle 2. I notice a small rectangle sticking out to the left of vehicle 2, indicating it is the side mirror. I also see a side mirror to the left of vehcile 10. It's very faint but I also see small white rectangles in the fronts of the vehicles. I assume these to be license plates. Other than that it is a little difficult finding concrete features as these features tend to be pretty small and point clouds aren't designed to capture that minute level of detail, making it tough to distinguish them from other objects in the cloud.
+
+![labeled bev map](img\precision_recall_plots.png.png)
+And lastly here is my precision-recall plots. It demostrates the precision, recall, iou, and position errors in the x, y, and z directions of the model.
