@@ -48,7 +48,12 @@ class Sensor:
         # otherwise False.
         ############
 
-        return True
+        pos_veh = np.ones((4, 1)) # homogeneous coordinates
+        pos_veh[0:3] = x[0:3] 
+        pos_sens = self.veh_to_sens*pos_veh # transform from vehicle to lidar coordinates
+        alpha = np.arctan(pos_sens[1, 0]/pos_sens[0, 0]) # calc angle between object and x-axis
+
+        return alpha >= self.fov[0] and alpha <= self.fov[1]
         
         ############
         # END student code
@@ -71,7 +76,22 @@ class Sensor:
             # - return h(x)
             ############
 
-            pass
+            # transform from vehicle to lidar coordinates
+            pos_veh = np.ones((4, 1)) # homogeneous coordinates
+            pos_veh[0:3] = x[0:3] 
+            
+            pos_sens = self.veh_to_sens*pos_veh 
+            a, b, c = pos_sens[0:3]
+            # - project from camera to image coordinates
+            if a <= 0:
+                z_pred = np.array([-100, -100])
+            else:   
+                u = self.c_i - self.f_i * b/a
+                v = self.c_j - self.f_j * c/a
+                z_pred = np.array([u, v])
+                
+            z_pred = np.matrix(z_pred.reshape(-1, 1))
+            return z_pred
         
             ############
             # END student code
@@ -156,7 +176,13 @@ class Measurement:
             # TODO Step 4: initialize camera measurement including z and R 
             ############
 
-            pass
+            self.z = np.zeros((sensor.dim_meas,1)) # measurement vector
+            self.z[0][0] = z[0]
+            self.z[1][0] = z[1]
+            self.sensor = sensor # sensor that generated this measurement
+            sigma_cam_i = params.sigma_cam_i
+            sigma_cam_j = params.sigma_cam_j
+            self.R = np.matrix([[sigma_cam_i**2, 0], [0, sigma_cam_j**2]]) # measurement noise covariance matrix
         
             ############
             # END student code
