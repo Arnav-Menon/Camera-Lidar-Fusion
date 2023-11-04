@@ -40,3 +40,26 @@ Some vehicle parts being rendered are the side mirrors in vehicle 2. I notice a 
 ![precision recall map](img/precision_recall_plots.png)
 
 And lastly here is my precision-recall plots. It demostrates the precision, recall, iou, and position errors in the x, y, and z directions of the model.
+
+
+
+
+
+# Part 2: Final Project
+## The necessary images for this part are under the ```img``` folder, named ```step1.png```, ```step2.png```, ```step3.png```, and ```step4.png```.
+
+### Write a short recap of the four tracking steps and what you implemented there. Which results did you achieve? Which part of the project was most difficult for you to complete, and why?
+
+In this part we were tasked with doing four things. First was implementing an Extended Kalman Filter to track single real-world targets with lidar measurements over time. Second was implementing track management to initialize and delete tracks, setting a track state, and a track score. Third, we implemented a single nearest neighbor data association to assiciate measurements to tracks. This was the start of multi target tracking! Lastly, to complete camera-lidar fusion, we implemented teh nonlinear camera measurement model. I resulted in low RMSE values for multi tracking, but high RMSE for single tracking. This is because the Kalman filter cannot compensate for the systematic offset the lidar detections contain. For me, part 3 was the toughest because that was the concept I was least sure about. It took a lot more rewatching the videos and doing outside research for me to complete that part.
+
+
+### Do you see any benefits in camera-lidar fusion compared to lidar-only tracking (in theory and in your concrete results)?
+Camera-Lidar fusion brings improved accuracy and robustness. That's because they have complementary strengths and weaknesses. Unfortunately, my results don't show this as I got similar results for lidar-only and camera-lidar. Camera sensors also bring with them extended range. This was evident in my findings because camera settings detected objects farther away than lidar-only.
+
+
+### Which challenges will a sensor fusion system face in real-life scenarios? Did you see any of these challenges in the project?
+In real life there may be senor noise and errors. We saw this in part 2 with the high RMSE value for single object tracking because lidar detections contained a y offset. Another challenge is computational complexity. Since we are computing on lidar and camera images, it will take longer to compute. This was also evident in part 4, where we were processing each frame a little slower. 
+
+
+### Can you think of ways to improve your tracking results in the future?
+One way could be to fine tune my paramterization by applying standard deviation values for lidar. I could also implement a more advanced data association such as Global Nearest Neighbor or Joint Probabilistic Data Association. I could also adapt the Kalman filter to estimate the object's width, length, and height. 
